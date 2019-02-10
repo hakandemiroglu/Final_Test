@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Atlanta Uber</title>
+
+    <!-- Leaflet JS & CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+   crossorigin=""/>
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+   <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+   integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+   crossorigin=""></script>
+
+     <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Sanchez" rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+  <!--<link href={{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }} rel="stylesheet" media="screen">-->
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+  integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+  crossorigin=""/>
+
+  <!-- Icons -->
+  <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!--  <link rel="stylesheet" href="leaflet-extramarkers.css"> -->
+  <link href={{ url_for('static', filename='css/leaflet-extramarkers.css') }} rel="stylesheet" media="screen">
+ <!-- Routes -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+
+    <!-- d3 JavaScript -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+    <!-- Our CSS -->
+    <link href={{ url_for('static', filename='css/style.css') }} rel="stylesheet" media="screen">
+    <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+
+  </head>
+  <body>
+   <!--<header class = " bg-primary" style="padding:10px">-->
+   <header class="masthead bg-primary text-white text-center" style="background-color: #18bc9c!important; padding:10px">
+      <div class="container">
+    <div class="row">
+          <div class="col-sm-1">
+              <div class="text-center mt-4">
+              <a class="btn btn-xl btn-outline-light" href="/">
+                <i class="fas fa-download mr-2"></i>
+                Home
+              </a>
+            </div>
+          </div>
+          <div class="col-sm-1">
+              <div class="text-center mt-4">
+              <a class="btn btn-xl btn-outline-light" href="/chart2">
+                <i class="fas fa-download mr-2"></i>
+                Chart
+              </a>
+            </div>
+          </div>
+           <div class="col-sm-4">
+            <h3 class="text-center">Uber Price Info and Closeby Places</h3>
+            </div>
+
+       <div class="col-sm-2">
+       <h5> Place</h5>
+
+        <select id="select-key">
+         <option value="Select" selected="selected">Please Select</option>
+          <option value="Centennial Park">Centennial Park</option>
+          <option value="Buckhead Bars">Buckhead Bars</option>
+          <option value="Inman Park">Inman Park</option>
+          <option value="Stone Mountain">Stone Mountain</option>
+          <option value="Six Flags">Six Flags</option>
+          <option value="Statefarm Arena">Statefarm Arena</option>
+          <option value="Zoo Atlanta">Zoo Atlanta</option>
+          <option value="Atlanta High Museum">Atlanta High Museum</option>
+          <option value="Fox Theater">Fox Theater</option>
+          <option value="Virginia Highlands">Virginia Highlands</option>
+          <option value="Shops at Buckhead">Shops at Buckhead</option>
+          <option value="Emory University">Emory University</option>
+          <option value="Georgia State University">Georgia State University</option>
+          <option value="Spelman College">Spelman College</option>
+          <option value="Edgewood Bars">Edgewood Bars</option>
+          <option value="Hartsfield Jackson Airport">Hartsfield Jackson Airport</option>
+          <option value="SunTrust Park">SunTrust Park</option>
+          <option value="Mercedes Benz Stadium">Mercedes Benz Stadium</option>
+          <option value="Lenox Square Mall">Lenox Square Mall</option>
+          <option value="Piedmont Park">Piedmont Park</option>
+        </select>
+
+           </div>
+           <div class="col-sm-2">
+              <h5> Time</h5>
+               <select id="select-time" > Time
+         <option value="Select" selected="selected">Please Select</option>
+          <option value="8:00">8:00 am</option>
+          <option value="9:00">9:00 am</option>
+          <option value="10:00">10:00 am</option>
+          <option value="11:00">11:00 am</option>
+          <option value="12:00">12:00 pm</option>
+          <option value="1:00">1:00 pm</option>
+          <option value="2:00">2:00 pm</option>
+          <option value="3:00">3:00 pm</option>
+          <option value="4:00">4:00 pm</option>
+          <option value="5:00">5:00 pm</option>
+          <option value="6:00">6:00 pm</option>
+          <option value="7:00">7:00 pm</option>
+          <option value="20:00">8:00 pm</option>
+
+        </select>
+           </div>
+           <div class="col-sm-2">
+              <h5>Show Closeby</h5>
+               <select id="select-places" > Show Closeby
+         <option value="Select" selected="selected">Please Select</option>
+          <option value="showplaces">Show Closeby Places</option>
+          <option value="dontshowplaces">Do not Show Closeby Places</option>
+        </select>
+           </div>
+      </div>
+       </div>
+</header>
+    <!-- map div -->
+
+    <div id="map">
+
+
+
+
+    </div>
+
+    <!-- D3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.min.js"></script>
+
+  <!-- MomentJS -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+
+  <!-- Leaflet JavaScript -->
+  <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+  integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+  crossorigin=""></script>
+
+  <!-- Icons -->
+  <script src={{ url_for('static', filename='js/leaflet-extramarkers.js') }}></script>
+  <script src={{ url_for('static', filename='js/leaflet-rotatedmarkers.js') }}></script>
+  <!-- <script src="leaflet-extramarkers.js"></script> -->
+  <!-- NEW CODE!!!!! -->
+  <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+<!-- END NEW CODE!!!!! -->
+  <!-- polyfill.io is library for using newer JavaScript features in older browers (such as Object.assign) -->
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+
+    <!-- API key -->
+    <!-- <script type="text/javascript" src="static/js/config.js"></script> -->
+      <!-- JS  -->
+   <script src={{ url_for('static', filename='js/logic.js') }}></script>
+    <!-- <script type="text/javascript" src="logic.js"></script> -->
+    <!-- <script type="text/javascript" src="static/js/logic2.js"></script> -->
+    <!-- <script type="text/javascript" src="static/js/logic3.js"></script> -->
+    <!-- <script type="text/javascript" src="static/js/logic4.js"></script> -->
+
+  </body>
+</html>
